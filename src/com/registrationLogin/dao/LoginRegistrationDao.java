@@ -74,4 +74,8 @@ public class LoginRegistrationDao {
 		}
 		return user;
 	}
+	
+	public boolean duplicateCheck() {
+		return false;
+	}
 }
