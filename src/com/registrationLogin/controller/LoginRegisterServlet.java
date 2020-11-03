@@ -3,9 +3,11 @@ package com.registrationLogin.controller;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.registrationLogin.dao.LoginRegistrationDao;
 import com.registrationLogin.model.LoginRegistrationBean;
@@ -58,11 +60,17 @@ public class LoginRegisterServlet extends HttpServlet {
         case "login":
         	
         	if(user != null && user.getUserName() != null) {
-//        		request.setAttribute("message", user.getFirstName());
-//        		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/welcome.jsp");
-//        		dispatcher.forward(request, response);
-            	request.setAttribute("message", user.getLastName());
-            	request.getRequestDispatcher("welcome.jsp").forward(request,response);		
+        		HttpSession session = request.getSession();
+    			session.setAttribute("user", name);
+    			//setting session to expiry in 30 mins
+    			session.setMaxInactiveInterval(30*60);
+    			Cookie userName = new Cookie("user", name);
+    			response.addCookie(userName);
+    			session.setAttribute("message", user.getLastName());
+    			String encodedURL = response.encodeRedirectURL("welcome.jsp");
+    			response.sendRedirect(encodedURL);
+//            	request.setAttribute("message", user.getLastName());
+//            	request.getRequestDispatcher("welcome.jsp").forward(request,response);		
             } else {
             	request.setAttribute("message", "Data not found, Complete registration");
             	request.getRequestDispatcher("registration.jsp").forward(request,response);	

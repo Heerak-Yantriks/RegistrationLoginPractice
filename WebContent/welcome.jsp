@@ -7,6 +7,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>Hi ${message} , Welcome!!!!!!</h3>
+<%
+//allow access only if session exists
+String user = null;
+if(session.getAttribute("user") == null){
+	response.sendRedirect("welcome.jsp");
+}else user = (String) session.getAttribute("user");
+String userName = null;
+String sessionID = null;
+Cookie[] cookies = request.getCookies();
+if(cookies !=null){
+for(Cookie cookie : cookies){
+	if(cookie.getName().equals("user")) userName = cookie.getValue();
+	if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+}
+}else{
+	sessionID = session.getId();
+}
+%>
+<h3>Hi ${message} , Welcome to the Blog!!!!!!</h3>
 </body>
 </html>
