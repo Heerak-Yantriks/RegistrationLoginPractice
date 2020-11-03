@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 <%
@@ -25,7 +25,8 @@ for(Cookie cookie : cookies){
 	sessionID = session.getId();
 }
 %>
-<h3>Hi ${message} , Welcome to the Blog!!!!!! Your Session ID=<%=sessionID %></h3>
+<%-- <h3>Hi ${message} , Welcome to the Blog!!!!!! Your Session ID=<%=sessionID %></h3> --%>
+<h3>Hi <%=userName %> , Welcome to the Blog!!!!!! Your Session ID=<%=sessionID %></h3>
 <br>User=<%=user %><br>
 <form action="<%=response.encodeURL("LogoutServlet") %>" method="post">
 <input type="submit" value="Logout" >

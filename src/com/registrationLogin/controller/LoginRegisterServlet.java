@@ -61,7 +61,7 @@ public class LoginRegisterServlet extends HttpServlet {
         	
         	if(user != null && user.getUserName() != null) {
         		HttpSession session = request.getSession();
-    			session.setAttribute("user", name);
+//    			session.setAttribute("user", name);
     			//setting session to expiry in 30 mins
     			session.setMaxInactiveInterval(30*60);
     			Cookie userName = new Cookie("user", name);
@@ -72,7 +72,7 @@ public class LoginRegisterServlet extends HttpServlet {
 //            	request.setAttribute("message", user.getLastName());
 //            	request.getRequestDispatcher("welcome.jsp").forward(request,response);		
             } else {
-            	request.setAttribute("message", "Data not found, Complete registration");
+            	request.setAttribute("message", "Please Complete the registration before Logging in!!!");
             	request.getRequestDispatcher("registration.jsp").forward(request,response);	
             }
         	break;

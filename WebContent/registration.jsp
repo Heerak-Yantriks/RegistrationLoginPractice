@@ -37,7 +37,7 @@ function validate()
      }
      else if(password==null || password =="")
      { 
-	     alert("Password must be at least 6 characters long."); 
+	     alert("Password can't be blank"); 
 	     /* password.focus() */
 	     return false; 
      }
