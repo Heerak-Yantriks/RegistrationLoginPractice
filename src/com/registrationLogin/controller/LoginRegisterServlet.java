@@ -39,8 +39,9 @@ public class LoginRegisterServlet extends HttpServlet {
         		user.setUserName(name);
         	}
         	else {
-        		System.out.println("Username ALready Exists");
-        		break;
+                request.setAttribute("message", "User Already Exists");
+                request.getRequestDispatcher("registration.jsp").forward(request,response);
+                break;
         	}
 //        	user.setUserName(name);
         	user.setPassword(password);

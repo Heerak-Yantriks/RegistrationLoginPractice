@@ -80,13 +80,10 @@ public class LoginRegistrationDao {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", passWord);
-			preparedStatement = connection.prepareStatement("select * from users where username = name");
+			preparedStatement = connection.prepareStatement("select * from users where username = ?");
+			preparedStatement.setNString(1, name);
 			ResultSet rs = preparedStatement.executeQuery();
-			int count = 0;
-			while(rs.next()) {
-				count++;
-			}
-			if(count>0) {
+			if(rs.next()) {
 				return true;
 			}
 			

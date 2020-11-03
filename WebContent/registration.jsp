@@ -35,7 +35,7 @@ function validate()
 	     /* username.focus() */
 	     return false; 
      }
-     else if(password.length<6)
+     else if(password==null || password =="")
      { 
 	     alert("Password must be at least 6 characters long."); 
 	     /* password.focus() */
@@ -60,27 +60,6 @@ function validate()
 	     return false; 
      }        
  }
- function duplicateCheck(){
-	 var username = document.form.username.value;
-	 try {
-			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", "143Mom205205");
-			preparedStatement = connection.prepareStatement("select * from users where username = username");
-			ResultSet rs = preparedStatement.executeQuery();
-			int count = 0;
-			while(rs.next()) {
-				count++;
-			}
-			if(count>0) {
-				alert("Username Already Exists");
-				return false;
-			}
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return true;
- }
 </script> 
 </head>
 <body>
@@ -88,6 +67,10 @@ function validate()
   <h1>User Registration</h1>
   <form name = "form" action="loginRegister" method = "post" onsubmit="return validate()">
    <table style="with: 80%">
+   <tr>
+   <td><h3>${message}</h3>
+   </td>
+   </tr>
     <tr>
      <td>First Name</td>
      <td><input type="text" name="firstName" /></td>
