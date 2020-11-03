@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,8 +58,29 @@ function validate()
 	     alert("Email can't be blank"); 
 	    /*  email.focus() */
 	     return false; 
-     }
- } 
+     }        
+ }
+ function duplicateCheck(){
+	 var username = document.form.username.value;
+	 try {
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", "143Mom205205");
+			preparedStatement = connection.prepareStatement("select * from users where username = username");
+			ResultSet rs = preparedStatement.executeQuery();
+			int count = 0;
+			while(rs.next()) {
+				count++;
+			}
+			if(count>0) {
+				alert("Username Already Exists");
+				return false;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+ }
 </script> 
 </head>
 <body>

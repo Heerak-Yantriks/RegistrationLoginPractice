@@ -11,6 +11,7 @@ public class LoginRegistrationDao {
 	
 	Connection connection;
 	PreparedStatement preparedStatement;
+	String passWord = System.getenv("PASS_VAR");
 	
 	public int addUser(LoginRegistrationBean user){
 		
@@ -23,7 +24,7 @@ public class LoginRegistrationDao {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", "143Mom205205");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", passWord);
 			preparedStatement = connection.prepareStatement(INSERT_DATA);
 			
 			preparedStatement.setString(1, user.getFirstName());
@@ -51,7 +52,7 @@ public class LoginRegistrationDao {
         try {
 			
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", "143Mom205205");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", passWord);
 			preparedStatement = connection.prepareStatement("select * from users where username = ? and password = ?");
 			
 			preparedStatement.setString(1, username);
@@ -75,7 +76,23 @@ public class LoginRegistrationDao {
 		return user;
 	}
 	
-	public boolean duplicateCheck() {
+	public boolean duplicateCheck(String name) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginRegistration", "root", passWord);
+			preparedStatement = connection.prepareStatement("select * from users where username = name");
+			ResultSet rs = preparedStatement.executeQuery();
+			int count = 0;
+			while(rs.next()) {
+				count++;
+			}
+			if(count>0) {
+				return true;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 }

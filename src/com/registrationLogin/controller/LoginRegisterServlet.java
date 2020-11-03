@@ -26,14 +26,23 @@ public class LoginRegisterServlet extends HttpServlet {
 		String name = request.getParameter("username");
         String password = request.getParameter("password");
         String submitType = request.getParameter("submit");
-
+        
+        boolean check = userDAO.duplicateCheck(name);
+        
         LoginRegistrationBean user = userDAO.validateUser(name, password);
         
         switch(submitType) {
         case "Register":
         	user.setFirstName(request.getParameter("firstName"));
         	user.setLastName(request.getParameter("lastName"));
-        	user.setUserName(name);
+        	if(!check) {
+        		user.setUserName(name);
+        	}
+        	else {
+        		System.out.println("Username ALready Exists");
+        		break;
+        	}
+//        	user.setUserName(name);
         	user.setPassword(password);
         	user.setMobile(request.getParameter("mobile"));
         	user.setAddress(request.getParameter("address"));
