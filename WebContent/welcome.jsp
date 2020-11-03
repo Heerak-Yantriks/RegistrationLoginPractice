@@ -25,6 +25,10 @@ for(Cookie cookie : cookies){
 	sessionID = session.getId();
 }
 %>
-<h3>Hi ${message} , Welcome to the Blog!!!!!!</h3>
+<h3>Hi ${message} , Welcome to the Blog!!!!!! Your Session ID=<%=sessionID %></h3>
+<br>User=<%=user %><br>
+<form action="<%=response.encodeURL("LogoutServlet") %>" method="post">
+<input type="submit" value="Logout" >
+</form>
 </body>
 </html>
