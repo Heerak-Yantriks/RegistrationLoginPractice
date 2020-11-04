@@ -61,16 +61,18 @@ public class LoginRegisterServlet extends HttpServlet {
         	
         	if(user != null && user.getUserName() != null) {
         		HttpSession session = request.getSession();
-//    			session.setAttribute("user", name);
-    			//setting session to expiry in 30 mins
-    			session.setMaxInactiveInterval(30*60);
+    			//setting session to expiry in 5 mins
+    			session.setMaxInactiveInterval(5*60);
+    			session.setAttribute("userValidation", name);
     			Cookie userName = new Cookie("user", name);
     			response.addCookie(userName);
-    			session.setAttribute("message", user.getLastName());
     			String encodedURL = response.encodeRedirectURL("welcome.jsp");
     			response.sendRedirect(encodedURL);
-//            	request.setAttribute("message", user.getLastName());
-//            	request.getRequestDispatcher("welcome.jsp").forward(request,response);		
+//        		session.setMaxInactiveInterval(30*60);
+//    			Cookie userName = new Cookie("user", name);
+//    			userName.setMaxAge(30*60);
+//    			response.addCookie(userName);
+//    			response.sendRedirect("welcome.jsp");
             } else {
             	request.setAttribute("message", "Please Complete the registration before Logging in!!!");
             	request.getRequestDispatcher("registration.jsp").forward(request,response);	
